@@ -99,6 +99,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .card-img{width:100%;max-width:100%;border:1px solid var(--line);border-radius:2px;display:block}
 .row{display:flex;flex-direction:column;gap:10px}
 .toast{min-height:20px}
+.chal{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chip{background:var(--panel);border:1px solid var(--gold);border-radius:2px;padding:16px 10px;font-size:16px;color:var(--cream);text-align:center}
+.chip:hover{background:var(--gold);color:var(--noir)}
+.vs{border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 10%,var(--noir));padding:16px 18px;border-radius:2px;display:flex;flex-direction:column;gap:4px}
+.vs b{font-family:var(--display);font-weight:400;font-size:clamp(22px,6vw,28px);color:var(--gold)}
+.vs span{color:var(--cream);font-size:16px}
+.duel{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-family:var(--display);font-size:clamp(22px,6vw,28px)}
+.duel .w{color:var(--gold)}
 .foot{margin-top:auto;font-size:12px;color:var(--muted);text-align:center;display:flex;flex-direction:column;gap:4px}
 .foot a,.link{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.ans.pick{transform:none}}
@@ -121,7 +129,7 @@ const UI = {
       herhint:"Testing him? Hand him the phone.", start:"Start the test", of:"of", q:"Question",
       note:"Rory's note", rule:"The rule", best:"Best answer", v3:"Spot on.", v2:"Close.", v1:"Not quite.", v0:"Not this time.", next:"Next question", finish:"See my result",
       yourscore:"Your score", worksect:"Three notes for you", perfect:"Keep doing exactly this:",
-      send:"Challenge someone", sendhint:"Send the test to someone who should take it.", copied:"Copied. Paste it into a message.", sharetext:"I scored {s}/100 in Rory Vale's Gentleman Test. Can you beat that?",
+      send:"Challenge someone", chaltitle:"Who will you challenge?", chalhint:"Your score goes with the link. Whoever beats it wins.", who:["Your partner","Your best friend","Your dad","Your brother"], msgs:["I scored {s}/100 in Rory Vale's Gentleman Test. Your turn, love. Can you beat me?","I scored {s}/100 in the Gentleman Test. Think you're more of a gentleman than me?","Dad, I scored {s}/100 in the Gentleman Test. Let's see if you taught me well.","I scored {s}/100 in the Gentleman Test. Your move, brother."], vsin:"You've been challenged:", vsq:"Can you beat it?", you:"You", them:"Challenger", win:"You win. Challenge them back.", lose:"They win this round. Read the notes and try again.", tie:"A tie. Two gentlemen.", sendhint:"Send the test to someone who should take it.", copied:"Copied. Paste it into a message.", sharetext:"I scored {s}/100 in Rory Vale's Gentleman Test. Can you beat that?",
       cardsect:"Your result card", cardhint:"Press and hold the card to save it, or take a screenshot.",
       again:"Take it again", follow:"Follow Rory on Instagram", followtt:"Follow Rory on TikTok", booklet:"Want all 10 Gentleman Rules? Comment GENTLEMAN under Rory's latest post.",
       ai:"Rory Vale is an AI character by Jascha AI.", imprint:"Imprint"},
@@ -131,7 +139,7 @@ const UI = {
       herhint:"Du testest ihn? Gib ihm das Handy.", start:"Test starten", of:"von", q:"Frage",
       note:"Rorys Notiz", rule:"Die Regel", best:"Beste Antwort", v3:"Genau richtig.", v2:"Fast.", v1:"Nicht ganz.", v0:"Diesmal daneben.", next:"Nächste Frage", finish:"Zum Ergebnis",
       yourscore:"Dein Ergebnis", worksect:"Drei Notizen für dich", perfect:"Mach genau so weiter:",
-      send:"Jemanden herausfordern", sendhint:"Schick den Test an jemanden, der ihn machen sollte.", copied:"Kopiert. Füge es in eine Nachricht ein.", sharetext:"Ich habe {s}/100 im Gentleman-Test von Rory Vale. Schaffst du mehr?",
+      send:"Jemanden herausfordern", chaltitle:"Wen forderst du heraus?", chalhint:"Dein Ergebnis wird mitgeschickt. Wer mehr Punkte hat, gewinnt.", who:["Deinen Partner","Deinen besten Freund","Deinen Vater","Deinen Bruder"], msgs:["Ich habe {s}/100 im Gentleman-Test von Rory Vale. Jetzt du, Schatz. Schaffst du mehr?","Ich hab {s}/100 im Gentleman-Test. Glaubst du, du bist mehr Gentleman als ich?","Papa, ich habe {s}/100 im Gentleman-Test. Mal sehen, ob du es mir richtig beigebracht hast.","Ich habe {s}/100 im Gentleman-Test. Du bist dran, Bruder."], vsin:"Du wurdest herausgefordert:", vsq:"Schaffst du mehr?", you:"Du", them:"Herausforderer", win:"Du gewinnst. Fordere zurück heraus.", lose:"Diese Runde geht an die andere Seite. Lies die Notizen und versuch es nochmal.", tie:"Unentschieden. Zwei Gentlemen.", sendhint:"Schick den Test an jemanden, der ihn machen sollte.", copied:"Kopiert. Füge es in eine Nachricht ein.", sharetext:"Ich habe {s}/100 im Gentleman-Test von Rory Vale. Schaffst du mehr?",
       cardsect:"Deine Ergebniskarte", cardhint:"Halte die Karte gedrückt, um sie zu speichern, oder mach einen Screenshot.",
       again:"Nochmal spielen", follow:"Rory auf Instagram folgen", followtt:"Rory auf TikTok folgen", booklet:"Alle 10 Gentleman Rules? Kommentiere GENTLEMAN unter Rorys neuestem Post.",
       ai:"Rory Vale ist eine KI-Figur von Jascha AI.", imprint:"Impressum"}
@@ -226,6 +234,7 @@ const TYPES = [
 let lang = "en";
 try{ if((navigator.language||"").toLowerCase().startsWith("de")) lang = "de"; }catch(e){}
 let state = {screen:"start", i:0, picks:[], order:[]};
+let VS = null; try{ const v = new URLSearchParams(location.search).get("vs"); if(v!==null && /^\d{1,3}$/.test(v) && +v<=100) VS = +v; }catch(e){}
 const app = document.getElementById("app");
 const T = k => UI[lang][k];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -258,6 +267,7 @@ function renderStart(){
     <div class="meta">${T("meta")}</div>
     <h1>${T("title")}</h1>
     <p class="sub">${T("sub")}</p>
+    ${VS!==null?`<div class="vs"><span>${T("vsin")}</span><b>${VS} / 100</b><span>${T("vsq")}</span></div>`:""}
     ${tape(0.0,[0,"","","",15])}
     <p class="lede">${T("lede")}</p>
     <button class="cta" id="start" data-act="begin">${T("start")}</button>
@@ -319,10 +329,10 @@ function renderResult(){
     <p class="desc">${lang==="en"?r.type.den:r.type.dde}</p>
     <div class="sect">${r.weak.length?T("worksect"):T("perfect")}</div>
     <ul class="tips">${tips}</ul>
-    <div class="row">
-      <button class="cta" id="share" data-act="share">${T("send")}</button>
-      <p class="hint toast" id="toast">${T("sendhint")}</p>
-    </div>
+    ${VS!==null?`<div class="vs"><div class="duel"><span class="${r.score>=VS?"w":""}">${T("you")} ${r.score}</span><span class="${VS>r.score?"w":""}">${T("them")} ${VS}</span></div><span>${r.score>VS?T("win"):r.score<VS?T("lose"):T("tie")}</span></div>`:""}
+    <div class="sect">${T("chaltitle")}</div>
+    <div class="chal">${T("who").map((w,i)=>`<button class="chip" id="chal-${i}" data-act="share" data-v="${i}">${w}</button>`).join("")}</div>
+    <p class="hint toast" id="toast">${T("chalhint")}</p>
     <div class="sect">${T("cardsect")}</div>
     <img class="card-img" id="card" alt="${esc(T("yourscore"))}: ${r.score}/100, ${esc(r.type.en)}">
     <p class="hint">${T("cardhint")}</p>
@@ -335,10 +345,13 @@ function renderResult(){
   drawCard(r);
 }
 
-async function share(){
-  const msg = T("sharetext").replace("{s}", result().score); const text = `${msg} ${QUIZ_URL}`;
+async function share(i){
+  const sc = result().score;
+  const msg = (i!==undefined && T("msgs")[i] ? T("msgs")[i] : T("sharetext")).replace("{s}", sc);
+  const url = QUIZ_URL + "?vs=" + sc;
+  const text = `${msg} ${url}`;
   const t = document.getElementById("toast");
-  try{ if(navigator.share){ await navigator.share({title:"The Gentleman Test", text:msg, url:QUIZ_URL}); return; } }catch(e){ if(e && e.name==="AbortError") return; }
+  try{ if(navigator.share){ await navigator.share({title:"The Gentleman Test", text:msg, url:url}); return; } }catch(e){ if(e && e.name==="AbortError") return; }
   try{ await navigator.clipboard.writeText(text); t.textContent=T("copied"); }
   catch(e){ t.textContent = text; }
 }
@@ -372,7 +385,7 @@ app.addEventListener("click", e=>{
   const b=e.target.closest("[data-act]"); if(!b||b.disabled) return;
   const a=b.dataset.act;
   if(a==="lang") setLang(b.dataset.v); else if(a==="begin") begin(); else if(a==="next") nextQ();
-  else if(a==="share") share(); else if(a==="pick") pick(Number(b.dataset.v));
+  else if(a==="share") share(b.dataset.v!==undefined?Number(b.dataset.v):undefined); else if(a==="pick") pick(Number(b.dataset.v));
 });
 render();
 </script>
