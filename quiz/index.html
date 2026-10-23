@@ -117,21 +117,21 @@ const IMPRINT_URL = "https://roryvale.github.io/impressum.html";
 const UI = {
   en:{brand:"Rory Vale · New York", title:'The <em>Gentleman</em> Test', sub:"How much of a gentleman are you?",
       meta:"15 questions · 3 minutes · by Rory Vale",
-      lede:"Rory is a tailor on New York's Lower East Side. He learned more than cutting suits from the old man who trained him.",
+      lede:"Rory is a bespoke tailor on New York's Lower East Side. He learned more than cutting suits from the old man who trained him.",
       herhint:"Testing him? Hand him the phone.", start:"Start the test", of:"of", q:"Question",
       note:"Rory's note", rule:"The rule", best:"Best answer", v3:"Spot on.", v2:"Close.", v1:"Not quite.", v0:"Not this time.", next:"Next question", finish:"See my result",
       yourscore:"Your score", worksect:"Three notes for you", perfect:"Keep doing exactly this:",
-      send:"Send it to him", copied:"Link copied. Paste it into a message.", sharetext:"How much of a gentleman are you? Take Rory Vale's test:",
+      send:"Challenge someone", sendhint:"Send the test to someone who should take it.", copied:"Copied. Paste it into a message.", sharetext:"I scored {s}/100 in Rory Vale's Gentleman Test. Can you beat that?",
       cardsect:"Your result card", cardhint:"Press and hold the card to save it, or take a screenshot.",
       again:"Take it again", follow:"Follow Rory on Instagram", followtt:"Follow Rory on TikTok", booklet:"Want all 10 Gentleman Rules? Comment GENTLEMAN under Rory's latest post.",
       ai:"Rory Vale is an AI character by Jascha AI.", imprint:"Imprint"},
   de:{brand:"Rory Vale · New York", title:'Der <em>Gentleman</em>-Test', sub:"Wie viel Gentleman steckt in dir?",
       meta:"15 Fragen · 3 Minuten · von Rory Vale",
-      lede:"Rory ist Schneider in der Lower East Side von New York. Von dem alten Mann, der ihn ausgebildet hat, hat er mehr gelernt als nur Anzüge zu schneiden.",
+      lede:"Rory ist Maßschneider in der Lower East Side von New York. Von dem alten Mann, der ihn ausgebildet hat, hat er mehr gelernt als nur Anzüge zu schneiden.",
       herhint:"Du testest ihn? Gib ihm das Handy.", start:"Test starten", of:"von", q:"Frage",
       note:"Rorys Notiz", rule:"Die Regel", best:"Beste Antwort", v3:"Genau richtig.", v2:"Fast.", v1:"Nicht ganz.", v0:"Diesmal daneben.", next:"Nächste Frage", finish:"Zum Ergebnis",
       yourscore:"Dein Ergebnis", worksect:"Drei Notizen für dich", perfect:"Mach genau so weiter:",
-      send:"An ihn schicken", copied:"Link kopiert. Füge ihn in eine Nachricht ein.", sharetext:"Wie viel Gentleman steckt in dir? Mach den Test von Rory Vale:",
+      send:"Jemanden herausfordern", sendhint:"Schick den Test an jemanden, der ihn machen sollte.", copied:"Kopiert. Füge es in eine Nachricht ein.", sharetext:"Ich habe {s}/100 im Gentleman-Test von Rory Vale. Schaffst du mehr?",
       cardsect:"Deine Ergebniskarte", cardhint:"Halte die Karte gedrückt, um sie zu speichern, oder mach einen Screenshot.",
       again:"Nochmal spielen", follow:"Rory auf Instagram folgen", followtt:"Rory auf TikTok folgen", booklet:"Alle 10 Gentleman Rules? Kommentiere GENTLEMAN unter Rorys neuestem Post.",
       ai:"Rory Vale ist eine KI-Figur von Jascha AI.", imprint:"Impressum"}
@@ -179,8 +179,8 @@ const QS = [
      ["Say: \"Text me when you're home safe.\"", "Sagen: „Schreib mir, wenn du gut zu Hause bist.“", 3, "Exactly. Not control, care. And when her message comes, answer it.", "Genau. Keine Kontrolle, sondern Fürsorge. Und wenn ihre Nachricht kommt, antworte darauf."],
      ["Call her an hour later", "Sie eine Stunde später anrufen", 1, "Kind thought, but an hour is long and a call can come at a bad moment. Ask for a short text before she leaves.", "Netter Gedanke, aber eine Stunde ist lang, und ein Anruf kann ungelegen kommen. Bitte sie vor der Abfahrt um eine kurze Nachricht."],
      ["Like her next Instagram story", "Ihre nächste Instagram-Story liken", 0, "A like isn't care. If you want to know she got home safe, ask her directly.", "Ein Like ist keine Fürsorge. Wenn du wissen willst, ob sie gut angekommen ist, frag sie direkt."]]},
- {en:"A tailor sees you for the first time. What does he notice first?", de:"Ein Schneider sieht dich zum ersten Mal. Was fällt ihm zuerst auf?", ren:"Your shoes show how you treat the things nobody looks at.", rde:"Deine Schuhe zeigen, wie du mit den Dingen umgehst, auf die keiner schaut.", sig:"— R.",
-  a:[["Your watch", "Deine Uhr", 1, "A watch is nice, but it's an accessory. A tailor looks down first, at your shoes.", "Eine Uhr ist schön, aber Beiwerk. Ein Schneider schaut zuerst nach unten, auf deine Schuhe."],
+ {en:"Someone with real style meets you for the first time. What does he notice first?", de:"Jemand mit echtem Stilgefühl trifft dich zum ersten Mal. Was fällt ihm zuerst auf?", ren:"Your shoes show how you treat the things nobody looks at.", rde:"Deine Schuhe zeigen, wie du mit den Dingen umgehst, auf die keiner schaut.", sig:"— R.",
+  a:[["Your watch", "Deine Uhr", 1, "A watch is nice, but it's an accessory. People with style look down first, at your shoes.", "Eine Uhr ist schön, aber Beiwerk. Menschen mit Stil schauen zuerst nach unten, auf deine Schuhe."],
      ["Your shoes", "Deine Schuhe", 3, "Exactly. Clean, cared-for shoes say more about you than any logo.", "Genau. Saubere, gepflegte Schuhe sagen mehr über dich als jedes Logo."],
      ["Your haircut", "Dein Haarschnitt", 1, "It matters. But everyone checks their haircut, few check their shoes. That's where you stand out.", "Wichtig, klar. Aber den Haarschnitt checkt jeder, die Schuhe kaum einer. Genau da fällst du auf."],
      ["Your phone", "Dein Handy", 0, "Your phone tells him nothing good. Put it away and polish your shoes instead.", "Dein Handy erzählt ihm nichts Gutes. Steck es weg und putz lieber deine Schuhe."]]},
@@ -321,7 +321,7 @@ function renderResult(){
     <ul class="tips">${tips}</ul>
     <div class="row">
       <button class="cta" id="share" data-act="share">${T("send")}</button>
-      <p class="hint toast" id="toast"></p>
+      <p class="hint toast" id="toast">${T("sendhint")}</p>
     </div>
     <div class="sect">${T("cardsect")}</div>
     <img class="card-img" id="card" alt="${esc(T("yourscore"))}: ${r.score}/100, ${esc(r.type.en)}">
@@ -336,9 +336,9 @@ function renderResult(){
 }
 
 async function share(){
-  const text = `${T("sharetext")} ${QUIZ_URL}`;
+  const msg = T("sharetext").replace("{s}", result().score); const text = `${msg} ${QUIZ_URL}`;
   const t = document.getElementById("toast");
-  try{ if(navigator.share){ await navigator.share({title:"The Gentleman Test", text:T("sharetext"), url:QUIZ_URL}); return; } }catch(e){ if(e && e.name==="AbortError") return; }
+  try{ if(navigator.share){ await navigator.share({title:"The Gentleman Test", text:msg, url:QUIZ_URL}); return; } }catch(e){ if(e && e.name==="AbortError") return; }
   try{ await navigator.clipboard.writeText(text); t.textContent=T("copied"); }
   catch(e){ t.textContent = text; }
 }
