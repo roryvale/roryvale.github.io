@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Gentleman Test · Rory Vale</title>
+<meta name="description" content="How much of a gentleman are you? 15 questions, 3 minutes, a personal tip for every answer. By Rory Vale, tailor on New York's Lower East Side.">
+<meta property="og:title" content="The Gentleman Test">
+<meta property="og:description" content="How much of a gentleman are you? 15 questions · 3 minutes · by Rory Vale">
+<meta property="og:image" content="https://roryvale.github.io/quiz/og.jpg">
+<meta property="og:url" content="https://roryvale.github.io/quiz/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#141210">
+<style>
+@font-face{font-family:"Bodoni Moda";src:url("../fonts/BodoniModa.ttf") format("truetype");font-weight:400 900;font-display:swap}
+@font-face{font-family:"Bodoni Moda";src:url("../fonts/BodoniModa-Italic.ttf") format("truetype");font-style:italic;font-weight:400 900;font-display:swap}
+@font-face{font-family:"Jost";src:url("../fonts/Jost.ttf") format("truetype");font-weight:100 900;font-display:swap}
+
+/* Layout: one centered column like a tailor's order card; a measuring tape runs across the top as progress. */
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --noir:#141210; --panel:#1d1a17; --panel-2:#26221e; --cream:#f2ece0; --muted:#a89f91;
+  --gold:#d6be82; --gold-deep:#a8904f; --line:rgba(214,190,130,.22); --ok:#8fb07a; --close:#d6be82; --weak:#d6994a; --bad:#cf5f49;
+  --display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --body:"Jost","Avenir Next","Helvetica Neue",Arial,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+html{background:#141210}
+body{margin:0}
+[hidden]{display:none!important}
+body{background:var(--noir);color:var(--cream);font-family:var(--body);font-weight:300;font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding-block:18px 32px;display:flex;flex-direction:column;gap:24px;min-height:100%;min-height:100dvh;box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.lang button{background:none;border:0;padding:6px 12px;font-size:12px;letter-spacing:.14em;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--gold);color:var(--noir);font-weight:500}
+
+/* measuring tape */
+.tape{position:relative;height:34px;border-radius:3px;background:#e9dcb8;overflow:hidden;box-shadow:inset 0 -1px 0 rgba(0,0,0,.25)}
+.tape .ticks{position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(20,18,16,.75) 0 1px,transparent 1px 100%) 0 0/calc(100%/15) 14px no-repeat,
+  repeating-linear-gradient(90deg,rgba(20,18,16,.45) 0 1px,transparent 1px 100%) 0 0/calc(100%/75) 7px repeat-x}
+.tape .fill{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,var(--gold-deep),var(--gold));mix-blend-mode:multiply;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.tape .nums{position:absolute;inset:auto 0 3px 0;display:flex;justify-content:space-between;padding:0 4px;font-size:10px;font-weight:500;color:rgba(20,18,16,.8);font-variant-numeric:tabular-nums}
+.count{font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* start */
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;padding-block:2vh}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(58px,17.5vw,92px);line-height:.98;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero .sub{font-family:var(--display);font-style:italic;font-size:clamp(28px,8vw,38px);line-height:1.25;margin:0;color:var(--cream)}
+.meta{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--cream);opacity:.85;font-size:clamp(19px,5.2vw,23px);line-height:1.5;max-width:40ch;margin:0}
+.cta{background:var(--gold);color:var(--noir);border:0;border-radius:2px;padding:20px 22px;font-weight:500;font-size:16px;letter-spacing:.2em;text-transform:uppercase;width:100%}
+.cta:hover{background:#e2cd96}
+.ghost{background:none;border:1px solid var(--line);border-radius:2px;padding:15px 20px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream);width:100%}
+.hint{font-size:15px;color:var(--muted);text-align:center;margin:0}
+
+/* question */
+.q{font-family:var(--display);font-weight:400;font-size:clamp(32px,9vw,44px);line-height:1.18;margin:0;text-wrap:balance}
+.answers{display:flex;flex-direction:column;gap:10px}
+.ans{display:flex;align-items:center;gap:16px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:19px 18px;transition:opacity .3s,border-color .3s,transform .45s}
+.ans .k{flex:none;width:34px;height:34px;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:var(--display);font-size:15px;border-radius:50%}
+.ans .t{min-width:0;font-size:clamp(18px,5vw,21px);line-height:1.35}
+.ans:hover{border-color:var(--gold)}
+.ans.dim{opacity:.32}
+.ans.pick{transform:rotateX(360deg);border-width:2px}
+.ans.v-ok{--v:var(--ok)} .ans.v-close{--v:var(--close)} .ans.v-weak{--v:var(--weak)} .ans.v-bad{--v:var(--bad)}
+.ans.pick,.ans.best{border-color:var(--v);background:color-mix(in srgb,var(--v) 14%,var(--panel))}
+.ans.best{--v:var(--ok);border-style:dashed;border-width:2px}
+.ans.pick .k,.ans.best .k{background:var(--v);border-color:var(--v);color:var(--noir);font-family:var(--body);font-weight:500;font-size:16px}
+.ans .pts{margin-left:auto;flex:none;display:flex;flex-direction:column;align-items:flex-end;font-family:var(--display);font-size:20px;line-height:1.1;color:var(--v)}
+.ans .pts small{font-family:var(--body);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.answers.done .ans{cursor:default}
+.note{background:var(--cream);color:var(--noir);border-radius:2px;border-left:8px solid var(--v);padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;animation:rise .35s ease-out}
+.note.v-ok{--v:var(--ok)} .note.v-close{--v:var(--close)} .note.v-weak{--v:var(--weak)} .note.v-bad{--v:var(--bad)}
+.note .verdict{font-family:var(--display);font-size:30px;line-height:1.1;font-weight:600;color:#1a1714}
+.note .lab{font-size:12px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-deep)}
+.note p{margin:0;font-family:var(--display);font-style:italic;font-size:clamp(21px,5.8vw,25px);line-height:1.35}
+.note .sig{font-family:var(--display);font-size:15px;color:#6b6155;white-space:nowrap}
+.note .rule{border-top:1px solid rgba(20,18,16,.15);padding-top:10px;display:flex;flex-direction:column;gap:4px}
+.note .rt{font-family:var(--display);font-size:clamp(17px,4.6vw,19px);line-height:1.35;color:#3a332c}
+@keyframes rise{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}}
+
+/* result */
+.score{display:flex;align-items:baseline;gap:10px}
+.score b{font-family:var(--display);font-weight:400;font-size:clamp(84px,26vw,128px);line-height:.9;color:var(--gold);font-variant-numeric:tabular-nums}
+.score span{font-family:var(--display);font-size:24px;color:var(--muted)}
+.type{font-family:var(--display);font-size:clamp(32px,9vw,44px);margin:0;line-height:1.05}
+.desc{margin:0;color:var(--cream);font-size:clamp(18px,5vw,21px);max-width:42ch}
+.tips{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none}
+.tips li{border-left:2px solid var(--gold);padding:4px 0 4px 14px;font-family:var(--display);font-style:italic;font-size:21px;line-height:1.35}
+.sect{font-size:13px;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.card-img{width:100%;max-width:100%;border:1px solid var(--line);border-radius:2px;display:block}
+.row{display:flex;flex-direction:column;gap:10px}
+.toast{min-height:20px}
+.foot{margin-top:auto;font-size:12px;color:var(--muted);text-align:center;display:flex;flex-direction:column;gap:4px}
+.foot a,.link{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.ans.pick{transform:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app" aria-live="polite"></div>
+
+<script>
+const QUIZ_URL = "https://roryvale.github.io/quiz/";
+const IG_URL = "https://www.instagram.com/roryvale.nyc/";
+const IMPRINT_URL = "https://roryvale.github.io/impressum.html";
+
+const UI = {
+  en:{brand:"Rory Vale · New York", title:'The <em>Gentleman</em> Test', sub:"How much of a gentleman are you?",
+      meta:"15 questions · 3 minutes · by Rory Vale",
+      lede:"Rory is a tailor on New York's Lower East Side. He learned more than cutting suits from the old man who trained him.",
+      herhint:"Testing him? Hand him the phone.", start:"Start the test", of:"of", q:"Question",
+      note:"Rory's note", rule:"The rule", best:"Best answer", v3:"Spot on.", v2:"Close.", v1:"Not quite.", v0:"Not this time.", next:"Next question", finish:"See my result",
+      yourscore:"Your score", worksect:"Three notes for you", perfect:"Keep doing exactly this:",
+      send:"Send it to him", copied:"Link copied. Paste it into a message.", sharetext:"How much of a gentleman are you? Take Rory Vale's test:",
+      cardsect:"Your result card", cardhint:"Press and hold the card to save it, or take a screenshot.",
+      again:"Take it again", follow:"Follow Rory on Instagram", booklet:"Want all 10 Gentleman Rules? Comment GENTLEMAN under Rory's latest post.",
+      ai:"Rory Vale is an AI character by Jascha AI.", imprint:"Imprint"},
+  de:{brand:"Rory Vale · New York", title:'Der <em>Gentleman</em>-Test', sub:"Wie viel Gentleman steckt in dir?",
+      meta:"15 Fragen · 3 Minuten · von Rory Vale",
+      lede:"Rory ist Schneider in der Lower East Side von New York. Von dem alten Mann, der ihn ausgebildet hat, hat er mehr gelernt als nur Anzüge zu schneiden.",
+      herhint:"Du testest ihn? Gib ihm das Handy.", start:"Test starten", of:"von", q:"Frage",
+      note:"Rorys Notiz", rule:"Die Regel", best:"Beste Antwort", v3:"Genau richtig.", v2:"Fast.", v1:"Nicht ganz.", v0:"Diesmal daneben.", next:"Nächste Frage", finish:"Zum Ergebnis",
+      yourscore:"Dein Ergebnis", worksect:"Drei Notizen für dich", perfect:"Mach genau so weiter:",
+      send:"An ihn schicken", copied:"Link kopiert. Füge ihn in eine Nachricht ein.", sharetext:"Wie viel Gentleman steckt in dir? Mach den Test von Rory Vale:",
+      cardsect:"Deine Ergebniskarte", cardhint:"Halte die Karte gedrückt, um sie zu speichern, oder mach einen Screenshot.",
+      again:"Nochmal spielen", follow:"Rory auf Instagram folgen", booklet:"Alle 10 Gentleman Rules? Kommentiere GENTLEMAN unter Rorys neuestem Post.",
+      ai:"Rory Vale ist eine KI-Figur von Jascha AI.", imprint:"Impressum"}
+};
+
+// Fragen V2: a = [en, de, punkte, tipp_en, tipp_de]
+const QS = [
+ {en:"Your date starts at 8 p.m. When do you arrive?", de:"Dein Date beginnt um 20 Uhr. Wann bist du da?", ren:"Ten minutes early is on time. On time is already late.", rde:"Zehn Minuten zu früh ist pünktlich. Pünktlich ist schon zu spät.", sig:"— Sal",
+  a:[["7:50 p.m.", "19:50 Uhr", 3, "Perfect. Ten minutes to breathe, pick the table and be calm when she walks in.", "Perfekt. Zehn Minuten, um durchzuatmen, den Tisch zu wählen und ruhig zu sein, wenn sie hereinkommt."],
+     ["8:00 sharp", "Punkt 20:00 Uhr", 2, "Not bad, but \"sharp\" leaves no room. One red light and you're late. Plan ten minutes of buffer.", "Nicht schlecht, aber auf die Minute lässt keinen Puffer. Eine rote Ampel, und du bist zu spät. Plane zehn Minuten Luft ein."],
+     ["8:05. Traffic happens.", "20:05 Uhr. Stau passiert.", 0, "Traffic always happens. That's exactly why you leave earlier. Five minutes late tells her she waited for you.", "Stau gibt es immer. Genau deshalb fährst du früher los. Fünf Minuten zu spät heißt: Sie hat auf dich gewartet."],
+     ["Text her \"on my way\" at 8:00", "Um 20 Uhr „bin unterwegs“ schreiben", 1, "A text is better than silence, but at 8:00 you should already be there. Leave so early that you never need that text.", "Eine Nachricht ist besser als Funkstille, aber um 20 Uhr solltest du schon da sein. Fahr so früh los, dass du die Nachricht nie brauchst."]]},
+ {en:"You're having dinner together. Where is your phone?", de:"Ihr esst zusammen. Wo ist dein Handy?", ren:"The most valuable thing you can give someone is your full attention.", rde:"Das Wertvollste, was du jemandem geben kannst, ist deine volle Aufmerksamkeit.", sig:"— Sal",
+  a:[["Face down on the table", "Umgedreht auf dem Tisch", 2, "Good start. But even face down it says: something else might be more important. Put it away completely.", "Guter Anfang. Aber auch umgedreht sagt es: Gleich könnte etwas wichtiger sein. Steck es ganz weg."],
+     ["In my pocket", "In meiner Tasche", 3, "Exactly. Out of sight, out of mind. She gets all of you.", "Genau. Aus den Augen, aus dem Sinn. Sie bekommt dich ganz."],
+     ["Next to my plate, on silent", "Neben dem Teller, lautlos", 1, "Silent doesn't mean invisible. Every glance at the screen says a small \"you're not enough\". Pocket it.", "Lautlos heißt nicht unsichtbar. Jeder Blick aufs Display sagt ein kleines „Du reichst nicht“. Steck es ein."],
+     ["In my hand, just in case", "In der Hand, nur für alle Fälle", 0, "Just in case of what? If something is truly urgent, excuse yourself and step outside. Otherwise: pocket.", "Für welchen Fall? Wenn wirklich etwas Dringendes ist, entschuldige dich und geh kurz raus. Sonst: in die Tasche."]]},
+ {en:"You're walking her home along a busy street. Where do you walk?", de:"Du bringst sie an einer belebten Straße nach Hause. Wo gehst du?", ren:"Walking on the street side is an old habit with a simple message: I've got you.", rde:"Auf der Straßenseite zu gehen ist eine alte Gewohnheit mit einer einfachen Botschaft: Ich pass auf dich auf.", sig:"— R.",
+  a:[["Wherever", "Egal wo", 0, "Small habits show how you think. Take the side between her and the traffic. It costs you nothing.", "Kleine Gewohnheiten zeigen, wie du denkst. Geh auf der Seite zwischen ihr und dem Verkehr. Es kostet dich nichts."],
+     ["On the street side", "Auf der Straßenseite", 3, "Exactly. No big gesture, no speech. She'll still notice.", "Genau. Keine große Geste, keine Rede. Sie merkt es trotzdem."],
+     ["A step behind her", "Einen Schritt hinter ihr", 1, "From behind you can hardly talk. Walk next to her, on the street side.", "Von hinten könnt ihr euch kaum unterhalten. Geh neben ihr, auf der Straßenseite."],
+     ["Ahead of her, to hold the doors", "Vor ihr, um Türen aufzuhalten", 1, "Holding doors is great. But on the sidewalk you belong next to her, on the street side.", "Türen aufhalten ist gut. Aber auf dem Gehweg gehörst du neben sie, auf die Straßenseite."]]},
+ {en:"She shows up in a new dress. What do you say?", de:"Sie kommt in einem neuen Kleid. Was sagst du?", ren:"Compliment her choices, not just her looks. Her taste was her decision.", rde:"Lob ihre Entscheidungen, nicht nur ihr Aussehen. Ihr Geschmack war ihre Wahl.", sig:"— R.",
+  a:[["\"You look hot.\"", "„Du siehst heiß aus.“", 0, "That says more about your reaction than about her. Compliment what she chose: the color, the style.", "Das sagt mehr über deine Reaktion als über sie. Lob, was sie ausgesucht hat: die Farbe, den Stil."],
+     ["\"You look beautiful.\"", "„Du siehst wunderschön aus.“", 2, "Kind and always welcome. Make it personal: say what exactly you like and why it suits her.", "Lieb und immer willkommen. Mach es persönlich: Sag, was genau dir gefällt und warum es zu ihr passt."],
+     ["\"Great choice. That color is so you.\"", "„Tolle Wahl. Die Farbe passt total zu dir.“", 3, "Perfect. You noticed her taste, her decision. That stays with her.", "Perfekt. Du hast ihren Geschmack bemerkt, ihre Entscheidung. Das bleibt hängen."],
+     ["Nothing. It might sound cheesy.", "Nichts. Könnte kitschig klingen.", 0, "Saying nothing sounds like you didn't notice. One honest, specific sentence is never cheesy.", "Nichts zu sagen klingt, als hättest du es nicht bemerkt. Ein ehrlicher, konkreter Satz ist nie kitschig."]]},
+ {en:"Two weeks ago she mentioned a café she loves. What do you do today?", de:"Vor zwei Wochen hat sie ein Café erwähnt, das sie liebt. Was machst du heute?", ren:"People rarely remember what you gave them. They remember that you listened.", rde:"Man erinnert sich selten daran, was du geschenkt hast. Aber daran, dass du zugehört hast.", sig:"— R.",
+  a:[["Ask her which café it was again", "Sie nochmal fragen, welches Café es war", 1, "Asking beats forgetting. Next time, write the name down right after the conversation.", "Nachfragen ist besser als vergessen. Schreib dir den Namen beim nächsten Mal direkt nach dem Gespräch auf."],
+     ["Book a table there without saying why", "Dort einen Tisch reservieren, ohne zu sagen, warum", 3, "Exactly. The moment she realizes you remembered is the moment she'll talk about.", "Genau. Der Moment, in dem sie merkt, dass du es dir gemerkt hast, ist der Moment, von dem sie erzählen wird."],
+     ["Tell her that I remember it", "Ihr sagen, dass ich mich daran erinnere", 2, "Nice. But showing beats telling. Take her there.", "Schön. Aber zeigen schlägt erzählen. Geh mit ihr hin."],
+     ["Take her somewhere better", "Mit ihr woanders hingehen, wo es besser ist", 0, "Better for whom? She told you what she loves. Listening means taking that seriously.", "Besser für wen? Sie hat dir gesagt, was sie liebt. Zuhören heißt, das ernst zu nehmen."]]},
+ {en:"You're getting ready for a date. How many sprays of cologne?", de:"Du machst dich fürs Date fertig. Wie viele Sprühstöße Parfum?", ren:"Two sprays. Not six. She should discover it, not smell it from the door.", rde:"Zwei Sprühstöße. Nicht sechs. Sie soll es entdecken, nicht schon an der Tür riechen.", sig:"— R.",
+  a:[["Six. Make an impression.", "Sechs. Eindruck machen.", 0, "Six sprays enter the room before you do. Two, on neck and wrist, and let her discover it.", "Sechs Sprühstöße betreten den Raum vor dir. Zwei, an Hals und Handgelenk, und lass sie es entdecken."],
+     ["Two", "Zwei", 3, "Perfect. Close enough to notice, never too much.", "Perfekt. Nah genug, um es zu bemerken, nie zu viel."],
+     ["None", "Keinen", 1, "Clean is good. But a subtle scent becomes part of how she remembers you. Two sprays.", "Sauber ist gut. Aber ein dezenter Duft wird Teil davon, wie sie sich an dich erinnert. Zwei Sprühstöße."],
+     ["As many as the bottle allows", "So viele, wie die Flasche hergibt", 0, "Then the bottle is on the date, not you. Two sprays are enough.", "Dann hat die Flasche das Date, nicht du. Zwei Sprühstöße reichen."]]},
+ {en:"She asks: \"What do you want to do tonight?\" What do you answer?", de:"Sie fragt: „Was willst du heute Abend machen?“ Was antwortest du?", ren:"Decisive is attractive. Plan the evening, and let her change it if she wants.", rde:"Entschlossen ist attraktiv. Plane den Abend und lass sie ihn ändern, wenn sie will.", sig:"— R.",
+  a:[["\"Whatever you want.\"", "„Was du willst.“", 0, "Sounds polite, but it hands her all the planning. Have a plan, and be open if she wants something else.", "Klingt höflich, schiebt ihr aber die ganze Planung zu. Hab einen Plan und sei offen, wenn sie etwas anderes möchte."],
+     ["\"I booked something. Wear comfortable shoes.\"", "„Ich hab was reserviert. Zieh bequeme Schuhe an.“", 3, "Exactly. Decisive and a little mysterious. She can relax and look forward to it.", "Genau. Entschlossen und ein bisschen geheimnisvoll. Sie kann sich zurücklehnen und sich freuen."],
+     ["Send her three options", "Ihr drei Vorschläge schicken", 2, "Thoughtful. But three options are homework. Pick one and keep a backup in your pocket.", "Aufmerksam. Aber drei Optionen sind Hausaufgaben. Wähl eine aus und hab einen Plan B in der Tasche."],
+     ["\"Let's see.\"", "„Mal sehen.“", 0, "\"Let's see\" usually means nothing happens. A gentleman shows up with a plan.", "„Mal sehen“ heißt meistens: Es passiert nichts. Ein Gentleman kommt mit einem Plan."]]},
+ {en:"After the date she goes home on her own, by taxi, train or car. What do you do?", de:"Nach dem Date fährt sie allein nach Hause, mit Taxi, Bahn oder Auto. Was tust du?", ren:"\"Text me when you're home\" isn't control. It's care.", rde:"„Schreib mir, wenn du zu Hause bist“ ist keine Kontrolle. Es ist Fürsorge.", sig:"— R.",
+  a:[["Nothing. She's an adult.", "Nichts. Sie ist erwachsen.", 0, "She is. And caring isn't the opposite of trusting. One short message shows her that her safety matters to you.", "Ist sie. Und Fürsorge ist nicht das Gegenteil von Vertrauen. Eine kurze Nachricht zeigt ihr, dass dir ihre Sicherheit wichtig ist."],
+     ["Say: \"Text me when you're home safe.\"", "Sagen: „Schreib mir, wenn du gut zu Hause bist.“", 3, "Exactly. Not control, care. And when her message comes, answer it.", "Genau. Keine Kontrolle, sondern Fürsorge. Und wenn ihre Nachricht kommt, antworte darauf."],
+     ["Call her an hour later", "Sie eine Stunde später anrufen", 1, "Kind thought, but an hour is long and a call can come at a bad moment. Ask for a short text before she leaves.", "Netter Gedanke, aber eine Stunde ist lang, und ein Anruf kann ungelegen kommen. Bitte sie vor der Abfahrt um eine kurze Nachricht."],
+     ["Like her next Instagram story", "Ihre nächste Instagram-Story liken", 0, "A like isn't care. If you want to know she got home safe, ask her directly.", "Ein Like ist keine Fürsorge. Wenn du wissen willst, ob sie gut angekommen ist, frag sie direkt."]]},
+ {en:"A tailor sees you for the first time. What does he notice first?", de:"Ein Schneider sieht dich zum ersten Mal. Was fällt ihm zuerst auf?", ren:"Your shoes show how you treat the things nobody looks at.", rde:"Deine Schuhe zeigen, wie du mit den Dingen umgehst, auf die keiner schaut.", sig:"— R.",
+  a:[["Your watch", "Deine Uhr", 1, "A watch is nice, but it's an accessory. A tailor looks down first, at your shoes.", "Eine Uhr ist schön, aber Beiwerk. Ein Schneider schaut zuerst nach unten, auf deine Schuhe."],
+     ["Your shoes", "Deine Schuhe", 3, "Exactly. Clean, cared-for shoes say more about you than any logo.", "Genau. Saubere, gepflegte Schuhe sagen mehr über dich als jedes Logo."],
+     ["Your haircut", "Dein Haarschnitt", 1, "It matters. But everyone checks their haircut, few check their shoes. That's where you stand out.", "Wichtig, klar. Aber den Haarschnitt checkt jeder, die Schuhe kaum einer. Genau da fällst du auf."],
+     ["Your phone", "Dein Handy", 0, "Your phone tells him nothing good. Put it away and polish your shoes instead.", "Dein Handy erzählt ihm nichts Gutes. Steck es weg und putz lieber deine Schuhe."]]},
+ {en:"You made a mistake and hurt her. How do you apologize?", de:"Du hast einen Fehler gemacht und sie verletzt. Wie entschuldigst du dich?", ren:"An apology with \"but\" is an argument in disguise.", rde:"Eine Entschuldigung mit „aber“ ist ein verkleideter Streit.", sig:"— R.",
+  a:[["\"I'm sorry, but you also…\"", "„Tut mir leid, aber du hast auch…“", 0, "Everything before the \"but\" disappears. Apologize first. Her part can wait for another day, if it matters at all.", "Alles vor dem „aber“ verschwindet. Entschuldige dich zuerst. Ihr Anteil kann an einem anderen Tag Thema sein, wenn überhaupt."],
+     ["\"I'm sorry if you felt hurt.\"", "„Tut mir leid, falls du dich verletzt fühlst.“", 1, "Sounds polite, but it puts the problem on her feelings. Own what you did: \"I was wrong.\"", "Klingt höflich, schiebt das Problem aber auf ihre Gefühle. Steh zu dem, was du getan hast: „Ich lag falsch.“"],
+     ["\"I'm sorry. I was wrong. Here's what I'll do differently.\"", "„Tut mir leid. Ich lag falsch. Das mache ich ab jetzt anders.“", 3, "Exactly. Owning it without excuses, plus a plan. That's how trust grows back.", "Genau. Dazu stehen, ohne Ausreden, plus ein Plan. So wächst Vertrauen wieder."],
+     ["A gift instead of words", "Ein Geschenk statt Worte", 1, "A gift can follow, but it can't replace the words. Say it first, face to face.", "Ein Geschenk kann folgen, aber die Worte ersetzt es nicht. Sag es zuerst, von Angesicht zu Angesicht."]]},
+ {en:"She says: \"Work was terrible today.\" How do you react?", de:"Sie sagt: „Die Arbeit war heute furchtbar.“ Wie reagierst du?", ren:"The first question is polite. The second one shows you were actually listening.", rde:"Die erste Frage ist höflich. Die zweite zeigt, dass du wirklich zugehört hast.", sig:"— R.",
+  a:[["\"Mine too.\"", "„Meine auch.“", 0, "Now it's about you. Stay with her day first. Your turn comes later.", "Jetzt geht es um dich. Bleib erst bei ihrem Tag. Du bist später dran."],
+     ["Ask: \"What happened?\"", "Fragen: „Was ist passiert?“", 2, "Good start. Then listen, and ask a second question about what she told you.", "Guter Anfang. Dann hör zu und stell eine zweite Frage zu dem, was sie erzählt hat."],
+     ["Ask what happened, listen, then ask a follow-up question", "Fragen, was passiert ist, zuhören und dann nachfragen", 3, "Exactly. The second question shows you really listened. That's rare, and she'll feel it.", "Genau. Die zweite Frage zeigt, dass du wirklich zugehört hast. Das ist selten, und sie spürt es."],
+     ["Give her a solution right away", "Ihr sofort eine Lösung geben", 1, "Well meant. But she probably wants to be heard first, not fixed. Ask: \"Do you want advice, or just to vent?\"", "Gut gemeint. Aber vermutlich will sie erst gehört werden, nicht repariert. Frag: „Willst du einen Rat oder einfach mal Dampf ablassen?“"]]},
+ {en:"What does real wealth mean to you?", de:"Was bedeutet echter Reichtum für dich?", ren:"Real wealth isn't the room. It's owning your time.", rde:"Echter Reichtum ist nicht das Zimmer. Es ist, über deine Zeit zu bestimmen.", sig:"— R.",
+  a:[["A big apartment", "Eine große Wohnung", 0, "A big apartment is nice, until you spend all your time paying for it. Real wealth is freedom.", "Eine große Wohnung ist schön, bis du deine ganze Zeit damit verbringst, sie zu bezahlen. Echter Reichtum ist Freiheit."],
+     ["A full bank account", "Ein volles Konto", 1, "Money helps, but it's a tool. What counts is what it buys you: time for what matters.", "Geld hilft, aber es ist ein Werkzeug. Entscheidend ist, was es dir kauft: Zeit für das, was zählt."],
+     ["Owning my time", "Über meine Zeit selbst bestimmen", 3, "Exactly. Deciding how you spend your days is the real luxury.", "Genau. Selbst zu entscheiden, wie du deine Tage verbringst, ist der echte Luxus."],
+     ["Expensive suits", "Teure Anzüge", 0, "Coming from a tailor: a great suit is wonderful, but it doesn't make you rich. It only makes you look the part.", "Sagt ein Schneider: Ein toller Anzug ist wunderbar, aber er macht dich nicht reich. Er lässt dich nur so aussehen."]]},
+ {en:"You walk into a room full of strangers. What do you do?", de:"Du betrittst einen Raum voller Fremder. Was machst du?", ren:"You don't own a room by being loud. You own it by being calm.", rde:"Einen Raum gewinnt man nicht, indem man laut ist. Sondern indem man ruhig bleibt.", sig:"— R.",
+  a:[["Find the loudest person", "Die lauteste Person suchen", 0, "The loudest person usually wants an audience, not a conversation. Greet the host first, then find someone standing alone.", "Die lauteste Person will meist Publikum, kein Gespräch. Begrüß zuerst den Gastgeber, dann such jemanden, der allein steht."],
+     ["Check my phone", "Aufs Handy schauen", 0, "Your phone is a hiding place, and everyone can see you hiding. Put it away, stand tall, say hello.", "Das Handy ist ein Versteck, und jeder sieht, dass du dich versteckst. Steck es weg, steh aufrecht, sag Hallo."],
+     ["Stand tall, stay calm, greet the host", "Aufrecht stehen, ruhig bleiben, den Gastgeber begrüßen", 3, "Exactly. Calm presence and good manners. People will come to you.", "Genau. Ruhige Präsenz und gute Manieren. Die Leute kommen von selbst zu dir."],
+     ["Wait until someone talks to me", "Warten, bis mich jemand anspricht", 1, "Waiting can take all night. Take the first step: a smile and \"Hi, I'm …\" is enough.", "Warten kann den ganzen Abend dauern. Mach den ersten Schritt: Ein Lächeln und „Hi, ich bin …“ reichen."]]},
+ {en:"5:40 a.m. Nobody's watching. How do you start your day?", de:"5:40 Uhr. Niemand schaut zu. Wie startest du in den Tag?", ren:"Nobody sees the first hour. That's exactly why it counts.", rde:"Die erste Stunde sieht niemand. Genau deshalb zählt sie.", sig:"— R.",
+  a:[["Snooze", "Schlummertaste", 0, "Snoozing means starting your day with \"not yet\". Put the alarm across the room and stand up when it rings.", "Schlummern heißt, den Tag mit „noch nicht“ zu beginnen. Stell den Wecker quer durchs Zimmer und steh auf, wenn er klingelt."],
+     ["Phone first, then coffee", "Erst Handy, dann Kaffee", 0, "Then the world decides your mood before you do. The first hour belongs to you. The phone can wait.", "Dann bestimmt die Welt deine Laune, bevor du es tust. Die erste Stunde gehört dir. Das Handy kann warten."],
+     ["Water, twenty minutes for the body, ten for the mind", "Wasser, zwanzig Minuten für den Körper, zehn für den Kopf", 3, "Exactly. Body first, then mind, then the world. Every single morning.", "Genau. Erst der Körper, dann der Kopf, dann die Welt. Jeden einzelnen Morgen."],
+     ["Coffee, then we'll see", "Kaffee, dann mal sehen", 1, "Coffee is fine, but take care of yourself first: a glass of water, move your body, clear your head. Then the coffee tastes even better.", "Kaffee ist okay, aber kümmere dich zuerst um dich: ein Glas Wasser, Bewegung, den Kopf frei machen. Dann schmeckt der Kaffee noch besser."]]},
+ {en:"A stranger drops a glove on the street. What do you do?", de:"Ein Fremder verliert auf der Straße einen Handschuh. Was tust du?", ren:"Be kind when no one is watching.", rde:"Sei freundlich, wenn niemand zuschaut.", sig:"— R.",
+  a:[["Keep walking", "Weitergehen", 0, "Five seconds of kindness and someone's day gets better. That's what a gentleman does, even when nobody's watching.", "Fünf Sekunden Freundlichkeit, und jemandes Tag wird besser. Genau das macht ein Gentleman, auch wenn keiner zusieht."],
+     ["Point at it", "Darauf zeigen", 1, "Better than nothing. But why not just pick it up? It takes two seconds.", "Besser als nichts. Aber warum hebst du ihn nicht einfach auf? Das dauert zwei Sekunden."],
+     ["Pick it up, hand it back, walk on", "Aufheben, zurückgeben, weitergehen", 3, "Exactly. Kind, quick, no applause needed.", "Genau. Freundlich, schnell, ganz ohne Applaus."],
+     ["Pick it up and start a long conversation", "Aufheben und ein langes Gespräch anfangen", 2, "Kind. But not every good deed needs a conversation. Hand it back with a smile and let them go on.", "Freundlich. Aber nicht jede gute Tat braucht ein Gespräch. Gib ihn mit einem Lächeln zurück und lass die Person weiterziehen."]]}
+];
+
+const TYPES = [
+ {min:90, en:"Sal-Level", de:"Sal-Level", den:"Sal would nod. Maybe even smile. Don't let it go to your head.", dde:"Sal würde nicken. Vielleicht sogar lächeln. Lass es dir nicht zu Kopf steigen."},
+ {min:65, en:"The Gentleman", de:"The Gentleman", den:"Quietly impressive. People remember how you make them feel.", dde:"Leise beeindruckend. Die Leute erinnern sich daran, wie sie sich bei dir fühlen."},
+ {min:40, en:"The Charmer", de:"The Charmer", den:"You've got the charm. Now make it a habit, not a mood.", dde:"Charme hast du. Jetzt mach eine Gewohnheit daraus, keine Laune."},
+ {min:0,  en:"The Rookie", de:"The Rookie", den:"Good news: every gentleman started here. Pick one note below and practice it this week.", dde:"Gute Nachricht: Jeder Gentleman hat hier angefangen. Nimm dir eine Notiz unten vor und übe sie diese Woche."}
+];
+
+let lang = "en";
+try{ if((navigator.language||"").toLowerCase().startsWith("de")) lang = "de"; }catch(e){}
+let state = {screen:"start", i:0, picks:[], order:[]};
+const app = document.getElementById("app");
+const T = k => UI[lang][k];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function shuffle(n){ const a=[...Array(n).keys()]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+function setLang(l){ lang=l; document.documentElement.lang=l; render(); }
+
+function topBar(){
+  return `<div class="top"><span class="brand">${T("brand")}</span>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="lang-en" aria-pressed="${lang==="en"}" data-act="lang" data-v="en">EN</button>
+      <button id="lang-de" aria-pressed="${lang==="de"}" data-act="lang" data-v="de">DE</button></div></div>`;
+}
+function tape(frac, labels){
+  const nums = labels.map(n=>`<span>${n}</span>`).join("");
+  return `<div class="tape" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(frac*100)}"><div class="ticks"></div><div class="fill" style="width:${(frac*100).toFixed(1)}%"></div><div class="nums">${nums}</div></div>`;
+}
+function foot(){
+  return `<div class="foot"><span>${T("ai")}</span><span><a href="${IMPRINT_URL}" target="_blank" rel="noopener">${T("imprint")}</a></span></div>`;
+}
+
+function render(){
+  if(state.screen==="start") renderStart();
+  else if(state.screen==="q") renderQ();
+  else renderResult();
+}
+
+function renderStart(){
+  app.innerHTML = topBar() + `<section class="hero">
+    <div class="meta">${T("meta")}</div>
+    <h1>${T("title")}</h1>
+    <p class="sub">${T("sub")}</p>
+    ${tape(0.0,[0,"","","",15])}
+    <p class="lede">${T("lede")}</p>
+    <button class="cta" id="start" data-act="begin">${T("start")}</button>
+    <p class="hint">${T("herhint")}</p></section>` + foot();
+}
+
+function begin(){ state={screen:"q", i:0, picks:[], order:QS.map(q=>shuffle(q.a.length))}; render(); window.scrollTo(0,0); }
+
+function renderQ(){
+  const q = QS[state.i], picked = state.picks[state.i];
+  const answered = picked!==undefined;
+  const done = state.i + (answered?1:0);
+  const order = state.order[state.i];
+  const letters = ["A","B","C","D"];
+  const vcls = p => p===3?"v-ok":p===2?"v-close":p===1?"v-weak":"v-bad";
+  const pickedPts = answered ? q.a[picked][2] : null;
+  const btns = order.map((ai,pos)=>{
+    const a=q.a[ai]; const isPick = answered && picked===ai;
+    const isBest = answered && !isPick && a[2]===3 && pickedPts<3;
+    let cls="ans", mark=letters[pos], pts="";
+    if(isPick){ cls+=" pick "+vcls(a[2]); mark = a[2]>=2?"✓":"✕"; pts=`<span class="pts">+${a[2]}</span>`; }
+    else if(isBest){ cls+=" best"; mark="✓"; pts=`<span class="pts"><small>${T("best")}</small></span>`; }
+    else if(answered){ cls+=" dim"; }
+    return `<button class="${cls}" id="ans-${pos}" ${answered?"disabled":""} data-act="pick" data-v="${ai}"><span class="k">${mark}</span><span class="t">${esc(lang==="en"?a[0]:a[1])}</span>${pts}</button>`;
+  }).join("");
+  const last = state.i===QS.length-1;
+  const pa = answered ? q.a[picked] : null;
+  const note = answered ? `<div class="note ${vcls(pickedPts)}"><span class="verdict">${T("v"+pickedPts)}</span><span class="lab">${T("note")}</span><p>${esc(lang==="en"?pa[3]:pa[4])}</p>
+       <div class="rule"><span class="lab">${T("rule")}</span><span class="rt">${esc(lang==="en"?q.ren:q.rde)} <span class="sig">${esc(q.sig)}</span></span></div></div>
+     <button class="cta" id="next" data-act="next">${last?T("finish"):T("next")}</button>` : "";
+  app.innerHTML = topBar() + tape(done/QS.length,[0,"","","",15]) +
+    `<div class="count">${T("q")} ${state.i+1} ${T("of")} ${QS.length}</div>
+     <h2 class="q">${esc(lang==="en"?q.en:q.de)}</h2>
+     <div class="answers ${answered?"done":""}">${btns}</div>${note}` + foot();
+  if(answered){ const n=document.getElementById("next"); if(n) n.focus({preventScroll:true}); }
+}
+
+function pick(ai){ if(state.picks[state.i]!==undefined) return; state.picks[state.i]=ai; renderQ();
+  const n=document.querySelector(".note"); if(n) n.scrollIntoView({behavior:"smooth",block:"nearest"}); }
+function nextQ(){ if(state.i<QS.length-1){ state.i++; renderQ(); window.scrollTo(0,0);} else { state.screen="result"; render(); window.scrollTo(0,0);} }
+
+function result(){
+  const pts = state.picks.map((ai,qi)=>QS[qi].a[ai][2]);
+  const total = pts.reduce((a,b)=>a+b,0);
+  const score = Math.round(total/ (QS.length*3) * 100);
+  const type = TYPES.find(t=>score>=t.min);
+  const weak = pts.map((p,qi)=>({p,qi})).filter(x=>x.p<3).sort((a,b)=>a.p-b.p||a.qi-b.qi).slice(0,3).map(x=>x.qi);
+  return {score,type,weak};
+}
+
+function renderResult(){
+  const r = result();
+  const tips = r.weak.length ? r.weak.map(qi=>{const a=QS[qi].a[state.picks[qi]]; return `<li>${esc(lang==="en"?a[3]:a[4])}</li>`;}).join("") : [13,4,10].map(qi=>`<li>${esc(lang==="en"?QS[qi].ren:QS[qi].rde)}</li>`).join("");
+  app.innerHTML = topBar() +
+   `<div class="sect">${T("yourscore")}</div>
+    <div class="score"><b>${r.score}</b><span>/ 100</span></div>
+    ${tape(r.score/100,[0,25,50,75,100])}
+    <h2 class="type">${lang==="en"?r.type.en:r.type.de}</h2>
+    <p class="desc">${lang==="en"?r.type.den:r.type.dde}</p>
+    <div class="sect">${r.weak.length?T("worksect"):T("perfect")}</div>
+    <ul class="tips">${tips}</ul>
+    <div class="row">
+      <button class="cta" id="share" data-act="share">${T("send")}</button>
+      <p class="hint toast" id="toast"></p>
+    </div>
+    <div class="sect">${T("cardsect")}</div>
+    <img class="card-img" id="card" alt="${esc(T("yourscore"))}: ${r.score}/100, ${esc(r.type.en)}">
+    <p class="hint">${T("cardhint")}</p>
+    <div class="row">
+      <a class="ghost" style="text-align:center;text-decoration:none" href="${IG_URL}" target="_blank" rel="noopener">${T("follow")}</a>
+      <button class="ghost" id="again" data-act="begin">${T("again")}</button>
+    </div>
+    <p class="hint">${T("booklet")}</p>` + foot();
+  drawCard(r);
+}
+
+async function share(){
+  const text = `${T("sharetext")} ${QUIZ_URL}`;
+  const t = document.getElementById("toast");
+  try{ if(navigator.share){ await navigator.share({title:"The Gentleman Test", text:T("sharetext"), url:QUIZ_URL}); return; } }catch(e){ if(e && e.name==="AbortError") return; }
+  try{ await navigator.clipboard.writeText(text); t.textContent=T("copied"); }
+  catch(e){ t.textContent = text; }
+}
+
+function drawCard(r){
+  const W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; const g=c.getContext("2d");
+  g.fillStyle="#141210"; g.fillRect(0,0,W,H);
+  g.strokeStyle="rgba(214,190,130,.35)"; g.lineWidth=2; g.strokeRect(40,40,W-80,H-80);
+  const disp='"Bodoni Moda", Didot, Georgia, serif', body='Jost, "Avenir Next", Arial, sans-serif';
+  g.textAlign="center"; g.fillStyle="#d6be82"; g.font=`500 30px ${body}`;
+  spaced(g,"THE GENTLEMAN TEST",W/2,150,8);
+  g.fillStyle="#f2ece0"; g.font=`italic 46px ${disp}`; g.fillText(lang==="en"?"How much of a gentleman are you?":"Wie viel Gentleman steckt in dir?",W/2,230);
+  g.fillStyle="#d6be82"; g.font=`400 300px ${disp}`; g.fillText(String(r.score),W/2,560);
+  g.fillStyle="#a89f91"; g.font=`400 44px ${disp}`; g.fillText("/ 100",W/2,630);
+  // tape
+  const tx=120,ty=700,tw=W-240,th=70; g.fillStyle="#e9dcb8"; g.fillRect(tx,ty,tw,th);
+  g.fillStyle="rgba(168,144,79,.85)"; g.fillRect(tx,ty,tw*r.score/100,th);
+  g.fillStyle="rgba(20,18,16,.75)"; for(let i=0;i<=100;i++){ const x=tx+tw*i/100; const h=i%10===0?34:(i%5===0?22:12); g.fillRect(x,ty,2,h); }
+  g.font=`500 20px ${body}`; for(let i=0;i<=100;i+=20){ g.fillText(String(i),Math.min(Math.max(tx+tw*i/100,tx+14),tx+tw-16),ty+th-10); }
+  g.fillStyle="#f2ece0"; g.font=`400 84px ${disp}`; g.fillText(lang==="en"?r.type.en:r.type.de,W/2,900);
+  g.fillStyle="#a89f91"; g.font=`300 34px ${body}`; wrap(g,lang==="en"?r.type.den:r.type.dde,W/2,970,W-260,48);
+  g.fillStyle="#d6be82"; g.font=`500 28px ${body}`; spaced(g,"@RORYVALE.NYC",W/2,H-150,6);
+  g.fillStyle="#a89f91"; g.font=`300 26px ${body}`; g.fillText((lang==="en"?"Take the test: ":"Mach den Test: ")+"roryvale.github.io/quiz",W/2,H-100);
+  const img=document.getElementById("card"); if(img) img.src=c.toDataURL("image/png");
+}
+function spaced(g,s,x,y,sp){ const w=[...s].reduce((a,ch)=>a+g.measureText(ch).width+sp,-sp); let cx=x-w/2; g.textAlign="left"; for(const ch of s){ g.fillText(ch,cx,y); cx+=g.measureText(ch).width+sp; } g.textAlign="center"; }
+function wrap(g,s,x,y,maxW,lh){ const words=s.split(" "); let line="",yy=y; for(const w of words){ const t=line?line+" "+w:w; if(g.measureText(t).width>maxW&&line){ g.fillText(line,x,yy); line=w; yy+=lh; } else line=t; } if(line) g.fillText(line,x,yy); }
+
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(()=>{ if(state.screen==="result") drawCard(result()); });
+app.addEventListener("click", e=>{
+  const b=e.target.closest("[data-act]"); if(!b||b.disabled) return;
+  const a=b.dataset.act;
+  if(a==="lang") setLang(b.dataset.v); else if(a==="begin") begin(); else if(a==="next") nextQ();
+  else if(a==="share") share(); else if(a==="pick") pick(Number(b.dataset.v));
+});
+render();
+</script>
+
+</body>
+</html>
