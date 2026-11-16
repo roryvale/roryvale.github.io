@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>You're in · Rory Vale</title>
+<meta name="theme-color" content="#141210">
+<style>
+  @font-face { font-family: "Bodoni Moda"; src: url("../fonts/BodoniModa.ttf") format("truetype"); font-weight: 400 900; font-display: swap; }
+  @font-face { font-family: "Bodoni Moda"; src: url("../fonts/BodoniModa-Italic.ttf") format("truetype"); font-style: italic; font-weight: 400 900; font-display: swap; }
+  :root { --noir:#141210; --cream:#f5f0e6; --gold:#d6be82; --soft:#cdc6ba; --muted:#968e82;
+          --serif: Didot, "Bodoni Moda", "Bodoni 72", Georgia, serif; --sans: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html, body { background:var(--noir); }
+  body { color:var(--cream); font-family:var(--serif); -webkit-font-smoothing:antialiased; min-height:100svh; display:flex; flex-direction:column; }
+  main { flex:1; max-width:560px; margin:0 auto; padding:96px 24px 40px; text-align:center; }
+  .label { font-family:var(--sans); font-weight:600; font-size:12px; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); }
+  h1 { font-weight:400; font-size:clamp(40px,10vw,64px); line-height:1.05; margin-top:18px; }
+  .rule { width:60px; height:1px; background:var(--gold); margin:28px auto; }
+  p { font-size:21px; line-height:1.65; color:var(--soft); margin-top:18px; }
+  .sign { font-style:italic; font-size:34px; color:var(--gold); margin-top:28px; }
+  .btn { display:inline-block; margin-top:30px; padding:18px 30px; border:1px solid var(--gold); color:var(--cream); text-decoration:none; font-size:22px; transition:background .2s,color .2s; }
+  .btn:hover,.btn:focus-visible { background:var(--gold); color:var(--noir); outline:none; }
+  footer { border-top:1px solid rgba(214,190,130,.2); padding:24px; text-align:center; font-family:var(--sans); font-size:13px; color:var(--muted); line-height:1.7; }
+  footer a { color:var(--soft); text-decoration:none; border-bottom:1px solid rgba(205,198,186,.35); }
+</style>
+</head>
+<body>
+<main>
+  <span class="label">Confirmed</span>
+  <h1>You're in.</h1>
+  <div class="rule"></div>
+  <p>Your free sample is on its way. Check your inbox in a minute &ndash; and your spam folder, just in case.</p>
+  <p class="sign">&mdash; R.</p>
+  <a class="btn" href="./">Back to the workbook</a>
+</main>
+<footer>
+  Rory Vale is an AI character &ndash; a creative AI project by <a href="mailto:mail@jascha-ai.de">Jascha AI</a>.
+  <div><a href="../impressum.html">Impressum</a> &nbsp;&middot;&nbsp; <a href="../datenschutz.html">Datenschutz</a></div>
+</footer>
+</body>
+</html>
